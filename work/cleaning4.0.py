@@ -195,10 +195,10 @@ if button_5:
             st.stop()
         elif result is not None:
             client, owner = result
-            ip = f"域名{row["域名"]}，地址{row["解析IP"]}业务在{client},使用{owner}回复邮件\n"
+            ip = f'域名{row["域名"]}，地址{row["解析IP"]}业务在{client},使用{owner}回复邮件\n'
             st.session_state["txt_list"].append(ip)
         else:
-            ip = f"域名{row["域名"]}，地址{row["解析IP"]}业务在地址未知位置地址段\n"
+            ip = f'域名{row["域名"]}，地址{row["解析IP"]}业务在地址未知位置地址段\n'
             st.session_state["txt_list"].append(ip)
 
 
