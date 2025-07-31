@@ -3,6 +3,7 @@ import pandas as pd
 import sys
 import os
 import time
+import openpyxl
 
 # 添加标题
 st.title("个人xlsx处理工具")
@@ -16,20 +17,20 @@ with st.sidebar:
     button_4 = st.button("4. 删除网段内容")
     button_5 = st.button("5. 执行文件")
 
-定义 rsa密钥(密钥):
-    如果 键 是 无:
-        返回 "请输入公司密码"
+def rsa_key(key):
+    if key is None:
+        return "请输入公司密码"
     elif key != 'aopnt.com':
-        返回 “公司密码错误”
-    否则:
-        返回 真
+        return "公司密码错误"
+    else:
+        return True
 
-结果 = rsa_key(公司密钥)
-如果 结果 是 真:
-    通过
-否则:
-    st.信息(结果)
-    街。停止()
+result = rsa_key(company_key)
+if result is True:
+    pass
+else:
+    st.info(result)
+    st.stop()
 
 
 data = st.file_uploader("上传你的数据文件（excel格式）：", type=["xlsx", "xls", "csv"])
@@ -202,18 +203,19 @@ if button_5:
             st.session_state["txt_list"].append(ip)
 
 
-如果 st.session_state["历史记录"] 不是 无 None:
-    与 st.扩展器("以往历史"):
+if st.session_state["history"] is not None:
+    with st.expander("以往历史"):
         st.dataframe(st.session_state["history"])
 
-如果 st.session_state["network"] 不是  None :
-    与 st.扩展器("业务网段"):
+if st.session_state["network"] is not None:
+    with st.expander("业务网段"):
         st.dataframe(st.session_state["network"])
 
-如果 st.session_state["clear_data"] 不是 None :
-    与 st.扩展器("清洗文件"):
+if st.session_state["clear_data"] is not None:
+    with st.expander("清洗文件"):
         st.dataframe(st.session_state["clear_data"])
 
-如果 st.session_state["txt_list"] 不是 None :
-    与 st.扩展器("执行结果"):
-        st.writest.session_state["txt_list"].strip()write(session_state["txt_list"].strip())
+if st.session_state["txt_list"] is not None:
+    with st.expander("执行结果"):
+        for x in st.session_state["txt_list"]:
+            st.write(x.strip())
